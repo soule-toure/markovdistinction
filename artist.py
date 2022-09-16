@@ -208,5 +208,6 @@ def main():
     image_list = art_maker.compose_image(time=int(input("Pick a number from 0-23: ")), drawings=5)
     print("Current States:", image_list)
     art_maker.draw_landscapes(image_list)
+    print("Thank you for visiting my portfolio! I hope you enjoyed, and come back again sometime.")
 
 main()
