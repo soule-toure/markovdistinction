@@ -1,9 +1,8 @@
 """
-Learning Objectives
-- Let's remember Python!
-- What would a Markov chain look like in code?
-Example of an Markov Chain implementation in Python (using concepts we learned
-in 1101).
+@Souleman Toure
+Due: 09-15-2022 @10PM
+What would a Markov chain look like in code?
+This program creates an image of the day and using a markov chain determines what the next image of a day will be drawn. We have Day, Night, Full Moon, Double Moon, and Double Sun
 Dependencies: numpy,
 """
 
@@ -23,43 +22,57 @@ class MarkovArtist:
     def getnextimage(self, current_landscape):
         """Decides which landscape to draw next based on the current landscape.
            Args:
-               current_landscape (str): the current landscape being drawn.
+               current_landscape (str): the current landscape
         """
         return np.random.choice(
             self.landscapes,
             p=[self.transition_matrix[current_landscape][next_landscape] \
-               for next_landscape in self.landscapes]
+                for next_landscape in self.landscapes]
         )
 
-    def compose_image(self, current_landscape="Day", drawings=3):
+    def compose_image(self, time, drawings=5):
         """ Draws the images.
            Args:
-                current_landscape (str): the current of the song that we are currently
-                looking at.
+                time (int): a number selected by the user
                 drawings (int): how many drawings we should generate for the portfolio.
         """
+        
         my_images = []
+        current_landscape = " "
+  
+        if (time < 0) | (time > 23):
+            int(input("Invalid Time! Please try again: "))
+        elif time < 4:
+            current_landscape = "Nice Moon"
+        elif 4 < time < 7:
+            current_landscape = "Night"
+        elif 7 < time < 13:
+            current_landscape = "Day"
+        elif 13 < time < 19:
+            current_landscape = "Double Sun"
+        elif 19 < time < 24:
+            current_landscape = "Double Moon"
+        my_images.append(current_landscape)
+      
         while len(my_images) < drawings:
             next_landscape = self.getnextimage(current_landscape)
             my_images.append(next_landscape)
             current_landscape = next_landscape
         return my_images
 
-    def draw_star(self, turtle_dude, color, x, y, angle, side_length, filled):
+    def draw_star(self, turtle_dude, x, y, angle, side_length, filled):
         """ This function draw the stars in the picture
         Args:
-          turtle_dude (obj):
-          color (str):
-          x (int): 
-          y (int):
-          angle (int):
-          side_length (int)
-          filled (boolean)
-        
+          turtle_dude (obj): the turtle
+          color (str): the color of the star
+          x (int): x-coordinate
+          y (int): y-coordinte
+          angle (int): angle for the turtle to draw
+          side_length (int): size of the stars
+          filled (boolean): fill star or not
         """
-        turtle_dude = turtle.Turtle()
-        turtle_dude.speed("fast")
-        turtle_dude.color(color)
+        turtle_dude.speed("slowest")
+        turtle_dude.color("yellow")
         turtle_dude.seth(angle)
         turtle_dude.up()
         turtle_dude.goto(x,y)
@@ -95,66 +108,89 @@ class MarkovArtist:
         if filled:
             turtle_dude.end_fill()
         turtle_dude.hideturtle()
+      
+    def draw_sun(self, turt, x, y):
+        turt.color("orange","orange")
+        turt.up()
+        turt.goto(x, y)
+        turt.down()
+        turt.begin_fill()
+        turt.circle(50,360)
+        turt.end_fill()
+        for i in range(18):
+            turt.right(90)
+            turt.penup()
+            turt.forward(10)
+            turt.pendown()
+            turt.forward(10)
+            turt.penup()
+            turt.backward(20)
+            turt.left(90)
+            turt.circle(50,20)
+        turt.hideturtle()
+          
+    def draw_moon(self, turt, x, y):
+        turt.up()
+        turt.goto(x,y)
+        turt.color('grey')
+        turt.begin_fill()
+        turt.circle(50)
+        turt.end_fill()
+        turt.hideturtle()
 
+      
     def draw_landscapes(self, my_images):
         """Transforms the string melody into a list of sound waves.
         Args:
         my_images (list): Landscapes 
         """
         window = turtle.Screen()
+        bert = turtle.Turtle()
         for painting in my_images:
-            print("Here is my " + painting + " art!")
+            print("Here is my " + painting + " art!")   
             if painting == "Day":
-                window.bgcolor("white")
-                bert = turtle.Turtle()       
-                bert.speed("slow")
-                bert.up()
-                bert.goto(100, 150)
-                bert.down()
-                #draw sun here
-
+                window.bgcolor("yellow")      
+                self.draw_sun(bert, 100, 50)
+              
             elif painting == "Night":
                 window.bgcolor("black")
-                bert = turtle.Turtle()
-                self.draw_star(bert, 'yellow', -300, 50, 0, 10, True)
-                self.draw_star(bert, 'yellow', -225, 250, 0, 10, True)
-                self.draw_star(bert, 'yellow', -125, 250, 0, 10, True)
-                self.draw_star(bert, 'yellow', -25, 75, 0, 10, True)
-                self.draw_star(bert, 'yellow', 75, 150, 0, 10, True)
-                self.draw_star(bert, 'yellow', 150, 125, 0, 10, True)
-                bert.up()
-                bert.goto(175, 150)
-                bert.down()
-                #drawn half moon here
+                self.draw_star(bert, -100, 25, 0, 10, True)      
+                self.draw_moon(bert, -40, 0)
+                self.draw_star(bert, 100, 75, 0, 10, True)
 
             elif painting == "Nice Moon":
-                window.bgcolor("black")
-                bert = turtle.Turtle()
-                self.draw_star(bert, 'yellow', 20, 100, 0, 10, True)
-                self.draw_star(bert, 'yellow', 100, 200, 0, 10, True)
-                self.draw_star(bert, 'yellow', 175, 250, 0, 10, True)
-                self.draw_star(bert, 'yellow', 260, 75, 0, 10, True)
-                self.draw_star(bert, 'yellow', 350, 150, 0, 10, True)
-                self.draw_star(bert, 'yellow', 500, 125, 0, 10, True)
-                bert.up()
-                bert.goto(175, 150)
-                bert.down()
-                #draw moon here
+                window.bgcolor("dark blue")
+                self.draw_star(bert, -100, 25, 0, 10, True)      
+                self.draw_moon(bert, -40, 0)
+                self.draw_star(bert, 100, 75, 0, 10, True)
+              
+            elif painting == "Double Moon":
+                window.bgcolor("dark blue")
+                self.draw_star(bert, 0, 25, 0, 10, True)
+                self.draw_moon(bert, -120, 0)
+                self.draw_moon(bert, 120, 0)
+                self.draw_star(bert, 50, 75, 0, 10, True)
+                self.draw_star(bert, 0, 75, 0, 10, True)
+
+            elif painting == "Double Sun":
+                window.bgcolor("yellow")
+                self.draw_sun(bert, 100, 100)
+                self.draw_sun(bert, -100, 100)
             turtle.clearscreen()
         turtle.bye()
-
 
 def main():
 
     art_maker = MarkovArtist({
-        "Day": {"Day": 0.2, "Night": 0.65, "Nice Moon": 0.15},
-        "Night": {"Day": 0.55, "Night": 0.20, "Nice Moon": 0.25},
-        "Nice Moon": {"Day": 0.7, "Night": 0.2, "Nice Moon": 0.1},
+        "Day": {"Day": 0.1, "Night": 0.55, "Nice Moon": 0.15, "Double Moon": .1, "Double Sun":.1 },
+        "Night": {"Day": 0.50, "Night": 0.15, "Nice Moon": 0.15, "Double Moon": .1, "Double Sun": .1 },
+        "Nice Moon": {"Day": 0.5, "Night": 0.15, "Nice Moon": 0.05, "Double Moon": .2, "Double Sun": .1 },
+        "Double Moon": {"Day": 0.65, "Night": 0.05, "Nice Moon": 0.1, "Double Moon": .05, "Double Sun": .15 },
+        "Double Sun": {"Day": 0.55, "Night": 0.15, "Nice Moon": 0.1, "Double Moon": .15, "Double Sun": .05 }
     })
 
-    image_list = art_maker.compose_image(current_landscape="Day", drawings=5)
+    image_list = art_maker.compose_image(time=int(input("Pick a number from 0-23: ")), drawings=2)
     print("Current States:", image_list)
     art_maker.draw_landscapes(image_list)
-
 
 main()
