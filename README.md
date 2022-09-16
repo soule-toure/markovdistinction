@@ -29,9 +29,11 @@ I did not allow myself to ask for too much help on this assignment. I tried to u
 Why was this an important challenge for you?
 It was important challenge because it made me happy about coding again. I missed the feeling of completing a project, and this one has given me confidence that I was very shaky about. I can code and I am not too shaby either. I am not the best, but I am not bad which is important. I belive! That's always a great step in my book.
 
+I also had to learn about creating my own repositories and cloning them, which was usually done for us almost in systems.
+
 What are the next steps for you going forward?
 I would like to have more detailed images on my landscapes. Adding potentially a house, tree, or some grass even. Something that might make the scene more indicative.
 
 Include a discussion of whether you believe your system is creative (and why or why not).
-I believe it is creative to a certain exent. I think a human is capable of drawing and might draw the landscapes that I drew.
+I believe it is creative to a certain exent. I think a human is capable of drawing and might draw the landscapes that I drew. I would want the system to be more dynamic before considering it creative. It seems too basic for me but maybe I am underestimating its power.
 
