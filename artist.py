@@ -2,7 +2,8 @@
 @Souleman Toure
 Due: 09-15-2022 @10PM
 What would a Markov chain look like in code?
-This program creates an image of the day and using a markov chain determines what the next image of a day will be drawn. We have Day, Night, Full Moon, Double Moon, and Double Sun
+This program creates an image of the day and using a markov chain determines what the next image of a day will be drawn. 
+We have Day, Night, Full Moon, Double Moon, and Double Sun
 Dependencies: numpy,
 """
 
@@ -43,7 +44,7 @@ class MarkovArtist:
         if (time < 0) | (time > 23):
             int(input("Invalid Time! Please try again: "))
         elif time < 4:
-            current_landscape = "Nice Moon"
+            current_landscape = "Full Moon"
         elif 4 < time < 7:
             current_landscape = "Night"
         elif 7 < time < 13:
@@ -107,6 +108,8 @@ class MarkovArtist:
         turtle_dude.forward(side_length)
         if filled:
             turtle_dude.end_fill()
+        turtle_dude.up()
+        turtle_dude.home()
         turtle_dude.hideturtle()
       
     def draw_sun(self, turt, x, y):
@@ -158,7 +161,7 @@ class MarkovArtist:
                 self.draw_moon(bert, -40, 0)
                 self.draw_star(bert, 100, 75, 0, 10, True)
 
-            elif painting == "Nice Moon":
+            elif painting == "Full Moon":
                 window.bgcolor("dark blue")
                 self.draw_star(bert, -100, 25, 0, 10, True)      
                 self.draw_moon(bert, -40, 0)
@@ -174,19 +177,19 @@ class MarkovArtist:
 
             elif painting == "Double Sun":
                 window.bgcolor("yellow")
-                self.draw_sun(bert, 100, 100)
-                self.draw_sun(bert, -100, 100)
+                self.draw_sun(bert, 100, 25)
+                self.draw_sun(bert, -100, 25)
             turtle.clearscreen()
         turtle.bye()
 
 def main():
 
     art_maker = MarkovArtist({
-        "Day": {"Day": 0.1, "Night": 0.55, "Nice Moon": 0.15, "Double Moon": .1, "Double Sun":.1 },
-        "Night": {"Day": 0.50, "Night": 0.15, "Nice Moon": 0.15, "Double Moon": .1, "Double Sun": .1 },
-        "Nice Moon": {"Day": 0.5, "Night": 0.15, "Nice Moon": 0.05, "Double Moon": .2, "Double Sun": .1 },
-        "Double Moon": {"Day": 0.65, "Night": 0.05, "Nice Moon": 0.1, "Double Moon": .05, "Double Sun": .15 },
-        "Double Sun": {"Day": 0.55, "Night": 0.15, "Nice Moon": 0.1, "Double Moon": .15, "Double Sun": .05 }
+        "Day": {"Day": 0.1, "Night": 0.55, "Full Moon": 0.15, "Double Moon": .1, "Double Sun":.1 },
+        "Night": {"Day": 0.50, "Night": 0.15, "Full Moon": 0.15, "Double Moon": .1, "Double Sun": .1 },
+        "Full Moon": {"Day": 0.5, "Night": 0.15, "Full Moon": 0.05, "Double Moon": .2, "Double Sun": .1 },
+        "Double Moon": {"Day": 0.65, "Night": 0.05, "Full Moon": 0.1, "Double Moon": .05, "Double Sun": .15 },
+        "Double Sun": {"Day": 0.55, "Night": 0.15, "Full Moon": 0.1, "Double Moon": .15, "Double Sun": .05 }
     })
 
     image_list = art_maker.compose_image(time=int(input("Pick a number from 0-23: ")), drawings=2)
